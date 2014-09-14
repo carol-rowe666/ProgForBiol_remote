@@ -1,5 +1,7 @@
+
 #Assignment3 Question1
 import math
+
 data = [['A1', 28], ['A2', 32], ['A3', 1], ['A4', 0],
         ['A5', 10], ['A6', 22], ['A7', 30], ['A8', 19],
         ['B1', 145], ['B2', 27], ['B3', 36], ['B4', 25],
@@ -22,10 +24,53 @@ for i in data:
         C_avg_birds += i[1]
 print "The total number of birds counted on sites with codes \n\tbegining with 'C' is %d." % C_avg_birds
 
+
 #Assignment3 Question2
 import pandas as pd
+
 
 def get_data_from_web(url):
     data = pd.read_csv(url)
     return data
 
+data = get_data_from_web('http://www.programmingforbiologists.org/data/houseelf_earlength_dna_data.csv')
+
+#determine the earisize as large or small
+earnum = 0
+data['earsize'] = 'ambiguous'
+for earsize in data['earlength']:
+    if earsize > 10.0:
+        data['earsize'][earnum] = 'large'
+    else:
+        data['earsize'][earnum] = 'small'
+    earnum = earnum + 1
+
+
+#determine %GC content
+count = -1
+data['GCcontent'] = 0
+for seq in data['dnaseq']:
+    GCcont = 0
+    length = len(seq)
+    count = count + 1
+    for letter in seq:
+        if (letter == 'G') or (letter == 'C'):
+            GCcont = GCcont + 1
+    data['GCcontent'][count] = GCcont
+    data['%GCcontent'] = data['GCcontent'] / float(length)
+
+#Create new table for columns of interest
+grangers_analysis = data[['id', 'earsize', '%GCcontent']]
+grangers_analysis.to_csv('grangers_analysis.csv')
+
+#determine average GC content of small-eared elves
+small_ears = grangers_analysis[grangers_analysis['earsize'] == 'small']
+print "The mean GC content of small-eared elves is %.2f." % small_ears.mean(0)
+
+#determine average GC content of large-eared elves
+large_ears = grangers_analysis[grangers_analysis['earsize'] == 'large']
+print "The mean GC conttent of large-eared elves is %.2f." % large_ears.mean(0)
+
+
+    
+    
