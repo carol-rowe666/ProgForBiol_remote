@@ -57,7 +57,16 @@ for seq in data['dnaseq']:
         if (letter == 'G') or (letter == 'C'):
             GCcont = GCcont + 1
     data['GCcontent'][count] = GCcont
-    data['%GCcontent'] = data['GCcontent'] / float(length)
+    data['%GCcontent'] = 100.0 * data['GCcontent'] / length
+
+#Alternative to %GCcontent
+count = 0
+data['alt_%GCcontent'] = 0
+for seq in data['dnaseq']:
+    length = len(data['dnaseq'][count])
+    data['alt_%GCcontent'][count] = 100.0 * (data['dnaseq'][count].count('G') + data['dnaseq'][count].count('C')) / length
+    count = count + 1
+
 
 #Create new table for columns of interest
 grangers_analysis = data[['id', 'earsize', '%GCcontent']]
