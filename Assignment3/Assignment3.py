@@ -27,7 +27,7 @@ print "The total number of birds counted on sites with codes \n\tbegining with '
 
 #Assignment3 Question2
 import pandas as pd
-
+import numpy as np
 
 def get_data_from_web(url):
     data = pd.read_csv(url)
@@ -74,12 +74,17 @@ grangers_analysis.to_csv('grangers_analysis.csv')
 
 #determine average GC content of small-eared elves
 small_ears = grangers_analysis[grangers_analysis['earsize'] == 'small']
-print "The mean GC content of small-eared elves is %.2f." % small_ears.mean(0)
+print "The mean GC content of small-eared elves is %.2f percent." % small_ears.mean(0)
 
 #determine average GC content of large-eared elves
 large_ears = grangers_analysis[grangers_analysis['earsize'] == 'large']
-print "The mean GC conttent of large-eared elves is %.2f." % large_ears.mean(0)
+print "The mean GC content of large-eared elves is %.2f percent." % large_ears.mean(0)
 
-
+#Alternative method for GC content of small- and large-eared elves, using GROUPING
+eared_data = data.groupby('earsize') #grouping by earsize
+for earsize, subgroup_data in eared_data: #creates variables 'earsize' for the ordered group, and 'subgroup_data' for the subset of data based on earsize
+    avg_GC_by_ears = np.mean(subgroup_data['%GCcontent'])
+    print "The mean GC content of {}-eared elves is {}%" .format(earsize, avg_GC_by_ears)
+    
     
     
