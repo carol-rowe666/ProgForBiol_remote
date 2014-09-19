@@ -86,5 +86,8 @@ for earsize, subgroup_data in eared_data: #creates variables 'earsize' for the o
     avg_GC_by_ears = np.mean(subgroup_data['%GCcontent'])
     print "The mean GC content of {}-eared elves is {}%" .format(earsize, avg_GC_by_ears)
     
-    
-    
+#testing
+earless_data = data.groupby(data['earlength'] > 10.0)
+for earsized, subgrouped in earless_data:
+    avged_GC_by_ears = np.mean(subgrouped['%GCcontent'])
+    print "The mean GC content of {}-eared elves is {}%" .format(earsized, avged_GC_by_ears)
