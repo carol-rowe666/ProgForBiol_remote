@@ -18,11 +18,13 @@ temptable = cur.fetchall()
 for n_code, o_code in temptable:
     #print new_code, oldcode
     if o_code is None:
-        o_code = n_code
+        o_code = 'unknown'
     oldcodes = o_code.split(",")
     for code in oldcodes:
         # the strip removes any whitespace
         code = code.strip()
+        if code is 'unknown':
+            code = None
         # ? represents the parameter
         cur.execute("INSERT INTO PortalMammals_species_code VALUES (?, ?)",(n_code, code))
         #print n_code, code
