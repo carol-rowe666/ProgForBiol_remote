@@ -1,23 +1,28 @@
 """Analysis code for Dr. Granger's project"""
 import urllib
 import csv
+import string
 
 def get_gc_content(seq):
     """Determine the GC content of a sequence"""
+    seq = seq.upper()
+    seq = seq.replace('\n', '')
     gc_content = 100.0 * (seq.count('G') + seq.count('C')) / len(seq)
     return gc_content
 
 def get_size_class(earlength):
     """Determine the size class of earlength based on Dr. Grangers specification"""
     earlength = float(earlength)
-    if earlength > 15.0:
+    if earlength >= 15.0:
         size_class = 'extralarge'
-    elif earlength > 10.0:
+    elif earlength >= 10.0:
         size_class = 'large'
-    elif earlength > 8.0:
+    elif earlength >= 8.0:
         size_class = 'medium'
-    else:
+    elif earlength > 0:
         size_class = 'small'
+    else:
+        size_class = 'Check earlength value: Zero or negative number likely.'
     return size_class
 
 def get_data_from_web(url, datatype, headerrow=True):
