@@ -23,10 +23,18 @@ class Platypus(object):
         #total_eggs = self.total_fecundity()
         #return self.eggs_per_season + [total_eggs] not what you were asking
         #self.eggs_per_season = self.eggs_per_season.extend(more_eggs)
-        self.eggs_per_season = self.eggs_per_season + [more_eggs]
+        self.eggs_per_season = self.eggs_per_season + more_eggs
         return self.eggs_per_season
 
 #data simulation
+data = [Platypus('Curly', [3]), Platypus('Larry', [2]), Platypus('Moe', [0])]
+for entry in data:
+    eggs=[random.randint(0,3) for p in range(0,9)]
+    entry.lay_eggs(eggs)
+    print "{} laid a total of {} in {} successful breeding seasons.".format(entry.name, entry.total_fecundity(), entry.breeding_seasons())
+    print entry.name, entry.eggs_per_season #printing this to make sure results are correct
+#Below is how I initially solved the above simulation:
+"""
 data = [['Curly', [3]], ['Larry', [2]], ['Moe', [0]]]
 count = 0
 for item in data:
@@ -34,18 +42,18 @@ for item in data:
     eggs=[random.randint(0,3) for p in range(0,9)]
     #add the 9 new egg values to the list for each platypus
     data[count][1].extend(eggs)
-    count = count + 1
+    count += 1
     name = Platypus(item[0], item[1])
     #print name.lay_eggs(eggs)
     print "{} laid a total of {} in {} successful breeding seasons.".format(item[0],name.total_fecundity(), name.breeding_seasons())
 print data
-
+"""
 
 perry = Platypus("perry", [3, 2, 4, 1, 2])
 print perry.total_fecundity()
 print perry.breeding_seasons()
 #print perry.lay_eggs(perry.total_fecundity()) #Oops, this isn't what you were asking!
-les_oefs = (2)
+les_oefs = [2, 3, 0] #making sure the multiple eggs will be added to the list in the lay_eggs function
 print perry.lay_eggs(les_oefs)
 #print perry.eggs_per_season
 print perry.total_fecundity()
